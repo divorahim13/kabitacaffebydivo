@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kabita Coffee & Space</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,400;1,700&family=Outfit:wght@300;400;500;600;700&family=Italiana&family=Newsreader:ital,wght@1,400;1,700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background": "#18120f",
+        "on-primary-container": "#422200",
+        "on-background": "#ede0da",
+        "primary-fixed": "#ffdcc0",
+        "primary-container": "#c8813a",
+        "surface-container-low": "#201a17",
+        "on-surface": "#ede0da",
+        "surface-container-highest": "#3a332f",
+        "outline-variant": "#524438",
+        "inverse-surface": "#ede0da",
+        "surface-dim": "#18120f",
+        "surface-variant": "#3a332f",
+        "surface": "#18120f",
+        "on-primary-fixed": "#2d1600",
+        "on-surface-variant": "#d7c3b3",
+        "outline": "#a08d7f",
+        "secondary": "#d7c4ab",
+        "surface-container-high": "#2f2925",
+        "tertiary-container": "#9b9078",
+        "surface-container-lowest": "#120d0a",
+        "primary-fixed-dim": "#ffb876",
+        "secondary-container": "#524532",
+        "inverse-primary": "#8c5008",
+        "secondary-fixed": "#f4dfc6",
+        "primary": "#ffb876",
+        "surface-container": "#241e1b",
+        "secondary-fixed-dim": "#d7c4ab",
+        "tertiary": "#d2c5ab",
+        "on-primary": "#4b2800",
+      },
+      fontFamily: {
+        "headline": ["Playfair Display", "serif"],
+        "body": ["Outfit", "sans-serif"],
+        "label": ["Outfit", "sans-serif"],
+        "accent": ["Italiana", "serif"],
+        "editorial": ["Newsreader", "serif"],
+      },
+      borderRadius: {
+        "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem",
+        "2xl": "1rem","3xl": "1.5rem","full": "9999px"
+      },
+    },
+  },
+}
+</script>
+<style>
+/* Global */
+* { scroll-behavior: smooth; }
+body { font-family: 'Outfit', sans-serif; background: #18120f; }
+.material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24; }
+.fill-icon { font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 24; }
+
+/* Single grain overlay */
+.grain { position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: 0.035;
+  background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuByX1oiqSTuMNyDB0SPDwPbW6_Q3nrR24NMjh60ij93ZcFXLo_eklWevGLGSVejDZeRxd3CSTm0fVyQ-JC27b-ptdYl_FS2higmv5mPtSgsXMvY8-AlnkJMR-SlsQ-kUdgwL9ge_Q0vbcwBLnaese5mHLEbqwXkDAcyCNaZ-gKPRe7-G1A5AoQl-fFmVR2Y-Qg9YEOemACXZx1uIpL10ddDCUUDQB8nuCYrW4PhPSqxTWLTZDOaglr8DvlWbyouekXqPLHZHhAiFZMU);
+}
+
+/* Sections — SPA behaviour */
+.page { display: none; min-height: 100dvh; padding-bottom: 7rem; }
+.page.active { display: block; }
+
+/* Hero */
+.hero-glow { background: radial-gradient(circle at center, rgba(200,129,58,0.18) 0%, rgba(15,10,7,0) 70%); }
+.amber-glow { background: radial-gradient(circle at center, rgba(200,129,58,0.15) 0%, rgba(15,10,7,0) 70%); }
+
+/* Accent border for events */
+.accent-border { border-left: 3px solid #C8813A; }
+
+/* Drop cap */
+.editorial-dropcap::first-letter {
+  float: left; font-family: 'Playfair Display', serif;
+  font-size: 4rem; line-height: 0.8; padding-right: 12px; color: #ffb876;
+}
+
+/* Glass card */
+.glass-card { background: rgba(26,18,10,0.6); backdrop-filter: blur(12px); }
+
+/* Hide scrollbar for tabs */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Nav active state */
+.nav-item { display:flex; flex-direction:column; align-items:center; justify-content:center;
+  color:#9E8D77; opacity:0.7; transition:all 0.3s; cursor:pointer; gap:2px; }
+.nav-item:active { transform: scale(0.9); }
+.nav-item.active { color:#F0E3C8; background: linear-gradient(to bottom, #C8813A, #8c5008);
+  border-radius: 9999px; padding: 8px 24px; opacity:1; transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(200,129,58,0.25); }
+.nav-item.active .material-symbols-outlined { font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 24; }
+
+/* Menu tab */
+.menu-tab { flex: none; padding: 10px 24px; border-radius: 9999px;
+  font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.menu-tab.active { background: linear-gradient(to bottom, #C8813A, #8c5008); color: #2d1600; font-weight: 600; }
+.menu-tab.inactive { background: #3a332f; color: #d7c3b3; }
+
+/* Menu content panels */
+.menu-panel { display: none; }
+.menu-panel.active { display: block; }
+
+/* Smooth page transitions */
+.page { animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+
+<body class="bg-background text-on-background selection:bg-primary-container/30 overflow-x-hidden">
+
+<!-- Single Grain Overlay -->
+<div class="grain"></div>
+
+<!-- ═══════════════════════════════════════════════════ TOP APP BAR -->
+<header class="fixed top-0 w-full z-[100] bg-[#0F0A07]/85 backdrop-blur-xl border-b border-[#C8813A]/20 shadow-2xl shadow-black/50 flex justify-between items-center px-6 h-20">
+  <div class="flex items-center gap-4">
+    <button onclick="toggleDrawer()" class="text-[#C8813A] active:scale-90 transition-transform">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <h1 class="text-xl font-bold text-[#F0E3C8] font-headline italic tracking-tight">Kabita Coffee & Space</h1>
+  </div>
+  <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low border border-[#C8813A]/25">
+    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+    <span class="text-[10px] uppercase tracking-widest font-medium text-on-surface-variant">Open Now</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════ SIDE DRAWER -->
+<div id="drawer-overlay" onclick="toggleDrawer()" class="fixed inset-0 z-[150] bg-black/60 hidden"></div>
+<aside id="drawer" class="fixed top-0 left-0 h-full w-72 z-[160] bg-[#100d0a] border-r border-[#C8813A]/20 shadow-2xl transform -translate-x-full transition-transform duration-300 flex flex-col">
+  <div class="p-6 border-b border-[#C8813A]/15">
+    <p class="font-accent italic text-[#C8813A] text-lg">Kabita</p>
+    <p class="text-xs text-on-surface-variant tracking-widest uppercase mt-1">Come, enjoy together.</p>
+  </div>
+  <nav class="flex-1 p-4 space-y-1">
+    <button onclick="goTo('beranda'); toggleDrawer()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-[#F0E3C8] transition-all text-sm font-medium">
+      <span class="material-symbols-outlined text-[#C8813A]">home</span> Beranda
+    </button>
+    <button onclick="goTo('story'); toggleDrawer()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-[#F0E3C8] transition-all text-sm font-medium">
+      <span class="material-symbols-outlined text-[#C8813A]">auto_stories</span> Tentang Kami
+    </button>
+    <button onclick="goTo('suasana'); toggleDrawer()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-[#F0E3C8] transition-all text-sm font-medium">
+      <span class="material-symbols-outlined text-[#C8813A]">photo_library</span> Suasana
+    </button>
+    <button onclick="goTo('menu'); toggleDrawer()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-[#F0E3C8] transition-all text-sm font-medium">
+      <span class="material-symbols-outlined text-[#C8813A]">menu_book</span> Menu & Harga
+    </button>
+    <button onclick="goTo('momen'); toggleDrawer()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-[#F0E3C8] transition-all text-sm font-medium">
+      <span class="material-symbols-outlined text-[#C8813A]">calendar_month</span> Momen & Events
+    </button>
+    <button onclick="goTo('pesan'); toggleDrawer()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-[#F0E3C8] transition-all text-sm font-medium">
+      <span class="material-symbols-outlined text-[#C8813A]">delivery_dining</span> Pesan / Delivery
+    </button>
+    <button onclick="goTo('lokasi'); toggleDrawer()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-[#F0E3C8] transition-all text-sm font-medium">
+      <span class="material-symbols-outlined text-[#C8813A]">near_me</span> Lokasi & Jam Buka
+    </button>
+  </nav>
+  <div class="p-6 border-t border-[#C8813A]/15">
+    <p class="text-xs text-outline italic">@kabita.jkt · Cibubur, Jakarta Timur</p>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAGE 1 — BERANDA (HOME)
+═══════════════════════════════════════════════════════════════════ -->
+<div id="page-beranda" class="page active">
+  <main class="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0 z-0">
+      <img alt="Coffee bokeh background" class="w-full h-full object-cover scale-110 blur-[2px] opacity-40"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYJWx1Lv-aKEb1_P4LrzS5pcN3dBE2B3zE19XipYUnzWeLR4n_tNa_TxyVM_QZEujBxPm6T2kNmzgZ-QsDyw4QyFrpbBaHBkZNpcR8-MUJYMH5eazQKHZgVrNu5jf-NhGTSGHbhw-vakFvUPnRD8ROhpEAH_Qk3qX62FhI7BWe8i2rnoAXt-kTHV77FOq8rlNfuD5IQUOwyllYkXB5VrspUTqrq078XqI274eujRrk63K_px0pwwDMDx8OJLirRQyEp5Watn_kADig"/>
+      <div class="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
+      <div class="absolute inset-0 hero-glow"></div>
+    </div>
+    <!-- Content -->
+    <div class="relative z-10 text-center px-8 flex flex-col items-center max-w-lg">
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[#C8813A] mb-4 font-medium">Hidden Gem · Cibubur</p>
+      <h2 class="text-5xl md:text-6xl font-headline text-on-surface leading-[1.1] mb-6 tracking-tight">
+        Come, enjoy <br/>
+        <span class="relative inline-block italic">
+          together.
+          <svg class="absolute -bottom-2 left-0 w-full h-3 text-primary-container/70" preserveaspectratio="none" viewbox="0 0 100 10">
+            <path d="M0 5 Q 25 0 50 5 T 100 5" fill="none" stroke="currentColor" stroke-width="2"></path>
+          </svg>
+        </span>
+      </h2>
+      <p class="text-on-surface-variant text-sm leading-relaxed font-body max-w-[260px]">
+        Coffee · Space · Vibes · Jakarta Timur
+      </p>
+      <div class="mt-12 flex flex-col gap-3 items-center">
+        <button onclick="goTo('menu')" class="group flex items-center gap-3 bg-gradient-to-b from-[#C8813A] to-[#8c5008] text-[#2d1600] px-10 py-4 rounded-full font-semibold shadow-lg shadow-primary-container/20 active:scale-95 transition-all duration-300">
+          <span>Lihat Menu</span>
+          <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform text-[18px]">arrow_forward</span>
+        </button>
+        <button onclick="goTo('story')" class="text-on-surface-variant text-sm font-medium hover:text-[#F0E3C8] transition-colors">
+          Kenali Kami →
+        </button>
+      </div>
+    </div>
+    <!-- Floating badge -->
+    <div class="absolute bottom-32 right-6 z-20">
+      <div class="bg-surface-container/70 backdrop-blur-md border border-outline-variant/20 px-4 py-3 rounded-2xl shadow-xl flex flex-col items-end">
+        <span class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant mb-1">Hari Ini</span>
+        <span class="text-xs font-medium text-[#F0E3C8]">14:00 – 23:00</span>
+      </div>
+    </div>
+  </main>
+  <!-- Quick scroll shortcuts -->
+  <section class="px-6 py-8 max-w-lg mx-auto grid grid-cols-2 gap-3">
+    <button onclick="goTo('suasana')" class="p-4 rounded-2xl bg-surface-container border border-outline-variant/10 text-left hover:bg-surface-container-high transition-all active:scale-95">
+      <span class="material-symbols-outlined text-[#C8813A] text-xl mb-2 block">photo_library</span>
+      <p class="text-sm font-medium text-[#F0E3C8]">Suasana</p>
+      <p class="text-xs text-on-surface-variant mt-0.5">2 lantai, cozy & aesthetic</p>
+    </button>
+    <button onclick="goTo('momen')" class="p-4 rounded-2xl bg-surface-container border border-outline-variant/10 text-left hover:bg-surface-container-high transition-all active:scale-95">
+      <span class="material-symbols-outlined text-[#C8813A] text-xl mb-2 block">calendar_month</span>
+      <p class="text-sm font-medium text-[#F0E3C8]">Momen</p>
+      <p class="text-xs text-on-surface-variant mt-0.5">Live music & events</p>
+    </button>
+    <button onclick="goTo('pesan')" class="p-4 rounded-2xl bg-surface-container border border-outline-variant/10 text-left hover:bg-surface-container-high transition-all active:scale-95">
+      <span class="material-symbols-outlined text-[#C8813A] text-xl mb-2 block">delivery_dining</span>
+      <p class="text-sm font-medium text-[#F0E3C8]">GoFood</p>
+      <p class="text-xs text-on-surface-variant mt-0.5">Super Partner delivery</p>
+    </button>
+    <button onclick="goTo('lokasi')" class="p-4 rounded-2xl bg-surface-container border border-outline-variant/10 text-left hover:bg-surface-container-high transition-all active:scale-95">
+      <span class="material-symbols-outlined text-[#C8813A] text-xl mb-2 block">near_me</span>
+      <p class="text-sm font-medium text-[#F0E3C8]">Lokasi</p>
+      <p class="text-xs text-on-surface-variant mt-0.5">Jl. Bulak Ringin, Cibubur</p>
+    </button>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAGE 2 — TENTANG KAMI (STORY)
+═══════════════════════════════════════════════════════════════════ -->
+<div id="page-story" class="page pt-24 overflow-x-hidden">
+  <main class="pb-8">
+    <section class="px-6 mb-16 relative max-w-lg mx-auto">
+      <div class="absolute -right-20 top-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+      <div class="mb-10">
+        <p class="text-[#C8813A] font-label tracking-[0.3em] uppercase text-[10px] mb-3">Our Story</p>
+        <h2 class="font-headline text-5xl leading-tight tracking-tight text-on-surface">
+          Kisah Di Balik <br/>
+          <span class="italic text-primary-fixed-dim">Setiap Seduhan.</span>
+        </h2>
+      </div>
+      <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-12 shadow-2xl">
+        <img alt="Interior Kabita" class="w-full h-full object-cover grayscale-[20%] sepia-[20%]"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf0TWeToeMPvEOZ-fY8UZaOp4swZIus-3UzuXFEqPeGVtnH9r5MMasPDzlDgp6CCKc4-ibU_8UJh35CYNem-KVTak4S-AEkQ9aFfkBvA1HGUldJEPjeahlqUgP1Bd1TeJZY3WkyJyFSvlk2mIfLE7iHmpitt0KhwY6TdyME_Iw2qxQpiSbAHvdg4Gh7VmPSkwWhiNdhHkcTOriFz4h4pJDw-_iu6sEd9LxvOzFyT6ZadcS3h5xEiZK4suL8UMHzm7pjzb4GkCKW2kz"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+      </div>
+      <!-- Pull Quote -->
+      <div class="py-10 border-y border-outline-variant/20 mb-12">
+        <blockquote class="font-headline text-2xl italic text-center leading-relaxed text-on-surface-variant">
+          "Bukan sekadar kopi — tapi <span class="text-primary">ruang</span> untuk menikmati."
+        </blockquote>
+      </div>
+      <!-- Story Text -->
+      <div class="space-y-6 mb-16">
+        <p class="editorial-dropcap text-base leading-relaxed text-on-surface-variant font-light">
+          Tersembunyi di sudut Cibubur, Kabita Coffee & Space hadir sebagai oase bagi mereka yang mencari ketenangan. Kami bukan sekadar tempat singgah, melainkan "hidden gem" yang menggabungkan kehangatan rumah dengan kenyamanan ruang kerja modern.
+        </p>
+        <p class="text-base leading-relaxed text-on-surface-variant font-light">
+          Diciptakan untuk mendukung produktivitas sekaligus melepas penat, kami menyajikan kopi berkualitas dengan harga yang ramah di kantong — mulai dari <span class="text-primary-fixed-dim font-medium italic">Rp15.000 hingga Rp45.000</span>.
+        </p>
+      </div>
+      <!-- Space Cards -->
+      <div class="space-y-4 mb-16">
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-label text-xs tracking-widest text-outline uppercase">The Atmosphere</span>
+          <div class="h-px flex-1 bg-outline-variant/30"></div>
+        </div>
+        <div class="bg-surface-container p-6 rounded-2xl border border-outline-variant/10 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-60 transition-opacity">
+            <span class="material-symbols-outlined text-4xl text-[#C8813A]">ac_unit</span>
+          </div>
+          <h4 class="font-headline text-xl mb-2 text-on-surface">Lantai 1: Sanctuary</h4>
+          <p class="text-on-surface-variant text-sm font-light mb-3">Indoor ber-AC, didesain untuk fokus mendalam atau percakapan intim dengan area bar yang relaxed.</p>
+          <span class="text-[#C8813A] text-xs tracking-widest font-bold uppercase">Indoor Comfort · Bar Area</span>
+        </div>
+        <div class="bg-surface-container-high p-6 rounded-2xl border border-outline-variant/10 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-60 transition-opacity">
+            <span class="material-symbols-outlined text-4xl text-[#C8813A]">wb_twilight</span>
+          </div>
+          <h4 class="font-headline text-xl mb-2 text-on-surface">Lantai 2: The View</h4>
+          <p class="text-on-surface-variant text-sm font-light mb-3">Rooftop outdoor yang lapang — smoking area dengan vibe malam Cibubur terbaik.</p>
+          <span class="text-[#C8813A] text-xs tracking-widest font-bold uppercase">Outdoor Rooftop · Smoking Area</span>
+        </div>
+        <div class="bg-gradient-to-br from-surface-container to-surface-container-highest p-6 rounded-2xl border border-primary/15 flex flex-col items-center text-center">
+          <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined text-2xl text-primary">wifi</span>
+          </div>
+          <h4 class="font-headline text-lg mb-2">WFC Friendly</h4>
+          <p class="text-on-surface-variant text-sm font-light">WiFi kencang dan stopkontak di setiap sudut strategis — cocok buat kerja dari kafe.</p>
+        </div>
+      </div>
+      <!-- CTA -->
+      <div class="flex flex-col items-center py-8 relative">
+        <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full pointer-events-none"></div>
+        <button onclick="goTo('lokasi')" class="px-10 h-14 rounded-full bg-gradient-to-b from-[#C8813A] to-[#8c5008] text-[#2d1600] font-bold tracking-widest flex items-center gap-3 shadow-xl shadow-primary/20 active:scale-95 transition-all">
+          TEMUKAN KAMI
+          <span class="material-symbols-outlined">trending_flat</span>
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAGE 3 — SUASANA (AMBIENCE)
+═══════════════════════════════════════════════════════════════════ -->
+<div id="page-suasana" class="page pt-24">
+  <main class="pb-8 px-6 max-w-lg mx-auto">
+    <section class="mb-8">
+      <h2 class="font-headline text-5xl text-on-background mb-2 tracking-tight">The Vibe.</h2>
+      <p class="font-editorial italic text-on-surface-variant text-lg">Menjelajahi setiap sudut estetik Kabita Coffee.</p>
+    </section>
+    <!-- Mood Tags -->
+    <div class="flex flex-wrap gap-2 mb-10">
+      <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-medium tracking-wide">WFC Friendly</span>
+      <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-medium tracking-wide">Instagramable</span>
+      <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-medium tracking-wide">Live Music</span>
+      <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-medium tracking-wide">2 Lantai</span>
+      <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-medium tracking-wide">Hidden Gem</span>
+    </div>
+    <!-- Asymmetric Grid -->
+    <div class="grid grid-cols-12 gap-4">
+      <!-- Lantai 1 -->
+      <div class="col-span-12 relative overflow-hidden rounded-[2rem] shadow-2xl group active:scale-[0.98] transition-all">
+        <div class="aspect-[4/5] w-full bg-surface-container-low overflow-hidden">
+          <img alt="Indoor Kabita" class="w-full h-full object-cover grayscale-[25%] group-hover:scale-110 transition-transform duration-700"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtZqwd4fVSh4_p5N8H4p1ptf0wy_Jmii5oSQCaTtWNUQhu__Na--BNwpgNO5kdVoXYQf1iVJErq8dcBLAKZsHGhhOboSzMbS85hRVs8PWUNElkpbDMWoupqCren4NX6zYQk7d3hbcs98Qd5bJGrxdvXjsc5NusFMpxYgJBdgRrclEYze2YIszQBOaXpJ0yZDJ40Eac4KA1Jj5fFCTjFZRFPhE-LLjUOOENxcO7vSIKT-L1-ZtoNZ1khzhprcqBHlwumuNPi5XwzxV1"/>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0F0A07] via-transparent to-transparent opacity-80"></div>
+        <div class="absolute bottom-6 left-6 flex items-center gap-3">
+          <span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+          <span class="text-on-surface font-headline text-2xl">Lantai 1 · Indoor AC + Bar</span>
+        </div>
+      </div>
+      <!-- Lantai 2 -->
+      <div class="col-span-7 relative overflow-hidden rounded-[2rem] shadow-xl group mt-4 active:scale-[0.98] transition-all">
+        <div class="aspect-[3/4] w-full bg-surface-container-low overflow-hidden">
+          <img alt="Rooftop Kabita" class="w-full h-full object-cover grayscale-[20%] group-hover:scale-110 transition-transform duration-700"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmK3yC2b6nIn06cIRdBmBl-eVw55O7dCU_v4zf9RfrQNW1Fsj40OlsiAGtQuYKpqyDDsaar5Gqs9O-SYwMBAYazXhdLaqTxI2iscnPZGox6L6HoOjdJM-V3aQbVD8O4S_QFESawxusPIbpti_j3gmpGekXO3ja0c3r0m3S0o9cBqbuAZGjH5bVo0smtjnPGi0dEvwTTpRki8tKRnf0td589C91nguEwx7g216-BodfeaI2XCwpaRHW-4oQdt0DKiKXwXCNf80WVVCW"/>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0F0A07] via-transparent to-transparent opacity-70"></div>
+        <div class="absolute bottom-4 left-4 flex items-center gap-2">
+          <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+          <span class="text-on-surface font-headline text-lg">Lantai 2 · Rooftop</span>
+        </div>
+      </div>
+      <!-- Evening Vibe -->
+      <div class="col-span-5 relative overflow-hidden rounded-[2rem] shadow-xl group mt-12 active:scale-[0.98] transition-all">
+        <div class="aspect-[1/1] w-full bg-surface-container-low overflow-hidden">
+          <img alt="Evening vibe" class="w-full h-full object-cover grayscale-[40%] group-hover:scale-110 transition-transform duration-700"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuATDiUhbBVbAiJ8WwNQ43mQsEhMY2p8931hbTM4ob4gFGPfmvQcj_xX9MtQk6SVDknjkDk2pwE9G2XNm9NHcV50dqed7_WZx7D5The_b3UDC9INDTEUO-UPIdS7tBrhmzD4DTc7u8Nl3BpP5N3LCPSv7hqZyZzfYksEO-BErTm5wUZih8Hg-DQmR9H-toI3Fjwjq1wqbJ9s5pA8mETXmt-k1hb0CIvXhPr-hgr2o0Ob6obfCjZlr9rj5qejdpWnC-skZe72G1iCzXyB"/>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0F0A07] via-transparent to-transparent opacity-70"></div>
+        <div class="absolute bottom-4 left-4 flex items-center gap-2">
+          <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+          <span class="text-on-surface font-headline text-base">Evening Vibe</span>
+        </div>
+      </div>
+    </div>
+    <!-- Instagram CTA -->
+    <div class="mt-16 flex justify-center">
+      <a href="https://instagram.com/kabita.jkt" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-surface-container shadow-inner border border-outline-variant/20 hover:bg-surface-container-high transition-colors group">
+        <span class="text-on-surface font-medium tracking-wide">@kabita.jkt</span>
+        <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+      </a>
+    </div>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAGE 4 — MENU & HARGA
+═══════════════════════════════════════════════════════════════════ -->
+<div id="page-menu" class="page pt-24">
+  <main class="px-5 max-w-lg mx-auto">
+    <section class="mb-6">
+      <h2 class="font-headline text-4xl font-bold tracking-tight text-on-surface mb-1">Menjelajahi Rasa</h2>
+      <p class="font-accent italic text-on-surface-variant text-lg">Pilihan terbaik untuk menemani setiap cerita.</p>
+    </section>
+    <!-- Category Tabs -->
+    <div class="flex gap-3 overflow-x-auto pb-5 no-scrollbar mb-2">
+      <button onclick="switchTab('kopi')" id="tab-kopi" class="menu-tab active">Kopi</button>
+      <button onclick="switchTab('nonkopi')" id="tab-nonkopi" class="menu-tab inactive">Non-Kopi</button>
+      <button onclick="switchTab('makanan')" id="tab-makanan" class="menu-tab inactive">Makanan</button>
+      <button onclick="switchTab('snack')" id="tab-snack" class="menu-tab inactive">Snack</button>
+    </div>
+
+    <!-- KOPI Panel -->
+    <div id="panel-kopi" class="menu-panel active">
+      <!-- Featured -->
+      <div class="relative group overflow-hidden rounded-2xl bg-[#1A120A] shadow-xl border border-white/5 mb-5">
+        <div class="aspect-[16/10] overflow-hidden">
+          <img alt="Caffe Latte Art" class="w-full h-full object-cover grayscale-[20%] group-hover:scale-105 transition-transform duration-700"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6voAzMXncE8t7YLhNuiO6M-1CKG1IvvV_Vv0DNigeyh5Sw5mtVcUc_MJA5AsDfh_p-jOmm7o5gQ0mv8Bqm4LnFOW5XVNnqvS8yqcfLultRfXNcy8I8t98wpcSR06YwqCGlVcTSVO9BbfHRF_nPk5sIPOO0ZwIMmBZYHskRhwN7ITp_Vymono_urIKVUj5rCymriPI-Vp8vp9GHQ0UVMLOC1qO1z6vpxIZmONlcTqBIoYp5Tp0UtKu8t3ogQwsv7F9bGg6foI8-hnS"/>
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-center mb-1">
+            <span class="flex items-center gap-1 text-[#C8813A] text-xs font-bold uppercase tracking-wide">
+              <span class="material-symbols-outlined text-[14px] fill-icon">star</span> Most Loved
+            </span>
+            <span class="text-[#C8813A] font-bold text-lg">Rp32k</span>
+          </div>
+          <h3 class="text-xl font-bold text-[#F0E3C8] mb-1">Caffe Latte (Signature)</h3>
+          <p class="text-[#9E8D77] text-sm">Espresso premium dengan susu lembut dan latte art artistik.</p>
+        </div>
+      </div>
+      <!-- Menu List -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg hover:bg-[#241e1b] transition-all">
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0">
+            <img alt="Americano" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_PFLBdFECOWLkMc9Ax-QEcopuVT5dWAIe4Ko-ZZcUtNTHH4a4jNdtmnXEwPrRW4FovEpwjFqbnV43VZJPsTHWUknlty-4APt99X0BqdjCTqMmN828tjEc6-2MlSqjgutNHMBaSxQJePacNWwY8mHYXwe8M2ZfDtcU0snmHtSo8xcTw3QQD539oWCVnAhy7w2IjfPUL776EQCRbPsAqLqYiZMUeX3kvCkfHuAh2qaGG27ECM_8gg0QMbhzfyukdE6ll91i-RDwobgZ"/>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Americano</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp26k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Double shot espresso dengan air panas yang seimbang.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg hover:bg-[#241e1b] transition-all">
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0">
+            <img alt="Espresso" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvpnhyxN6XNFfozrNJ1cVYbLR5RYd0cGRO3Gi4lCCPOUhaE0NzR_ZllWX4AizypY61u9hxI-KCI4JP5fSF4nN4S_05X9uuVz4o3RLbfg6c4KwxvlWa34cqlEAev0XtlHJmH03qATZOOjw-5WkmurhX6_KF6o8VDl5s7jLhrODBlCnywLBuH8iUY8_bQGdCDyvh1l7LBrAC2JE9qMmFfAmMQfGqxFJjGfAW_-zwJvE8KxZ8ptn-nK2WAGgj0F4ARJINj0PdcwzrPewo"/>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Espresso</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp20k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Konsentrasi kopi murni dengan aroma yang intens.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg hover:bg-[#241e1b] transition-all">
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#C8813A]">local_cafe</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">On Rock</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp23k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Espresso segar dituang di atas batu es besar.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg hover:bg-[#241e1b] transition-all">
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#C8813A]">local_cafe</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Guest Bean</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp35k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Biji kopi pilihan dari roastery tamu spesial.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg hover:bg-[#241e1b] transition-all">
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#C8813A]">local_cafe</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Local Bean</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp25k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Kebanggaan kopi lokal Nusantara pilihan barista.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NON-KOPI Panel -->
+    <div id="panel-nonkopi" class="menu-panel">
+      <div class="space-y-3 mt-4">
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg">
+          <div class="h-16 w-16 rounded-lg bg-surface-container flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[#C8813A]">local_drink</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Cheese Tea</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp28k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Teh premium dengan topping keju lembut creamy.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg">
+          <div class="h-16 w-16 rounded-lg bg-surface-container flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[#C8813A]">local_bar</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Mocktail</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp30k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Perpaduan buah segar dan soda yang menyegarkan.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg">
+          <div class="h-16 w-16 rounded-lg bg-surface-container flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[#C8813A]">local_drink</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Iced Tea</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp18k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Teh hitam dingin dengan pilihan lemon atau lychee.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAKANAN Panel -->
+    <div id="panel-makanan" class="menu-panel">
+      <div class="space-y-3 mt-4">
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg relative">
+          <div class="absolute -top-1 -right-1 bg-[#C8813A] text-[#120d0a] text-[9px] font-bold px-2 py-0.5 rounded shadow-sm uppercase tracking-tighter">must try</div>
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0">
+            <img alt="Roti Panggang" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcqSqEFx1zn4Gbn1sZXWoJEgKZeY8DrnfV8Eqol7RJMCWQxOy7ZE-0XxYNm2VOebUNvwkgmiAM2yUE6WoY53Ka0Z1bHuPmQqES899-5OQLdljiS5FzlPHm8omhIha_X_2RRwufgLFVKYD6lYnRJsW8mq3I1MG9wkPU1JPYJJr4tUHsyHcuukp1zYfEWQDs0Vh29TPhrDo2oJTyqJz7bEZEBI_n4xziyWj_GBudQKzZcCDxuCEDWnh65VdyV6Va7UprmGA3DERSzBbV"/>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Roti Panggang</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp24k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Toast klasik dengan pilihan selai artisan kami.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg">
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0">
+            <img alt="Macaroni Schotel" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpop5hu2xLl0EfiG7kdDukXrFnCz4AXrjVlQUTD5ICf-2nrXIqDcY7nRxBm10_GCyZC2Z3XCtNI1Ybvv42lGHYhXD937Uvc4iFt9Aa50XTSYQPHQmN0FXVZLMFTo3NkMACO8FZyoiFqZe-cLlS6cbUD-BeGZA5gx5B3HQYg4CSBkc9jcSelON-tQ7U4nTwNvKS7dfkR2s23bMiAhbVCvbTIZM_3v4TnG70pbO6oMBNjNZtLTHMXWoW2n1q2xEQmK0VKnsj55qj8Lx1"/>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Macaroni Schotel</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp29k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Panggang gurih dengan keju melimpah dan daging asap.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg">
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0">
+            <img alt="Burger dan Fries" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiHiPxuTvGcJTcjDngY6djePY_6xY1Wb8K5puoRMiXboE2zlMG9ZAhiBW2up6eD_UHrk1Bx8yXgfIXO_3dAf_GhHXxkZ1FisfFEDQ--JQ6Lita32-wum1nX_W5H3gctYxGSzkcvSf-cw8Wi-lq__H5sMbZkAKkhUvZJ8jL2DiRmBzsJBqKSTX5fgXjgWBq4bFtz79Ix_T1LcgBrwojyW8Gje7wdHjcihdrK2qHqzG3uaomSwkmlBSQt3W9LiuMjCE7xr63ofXeDtbJ"/>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Burger + Fries</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp45k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Beef patty juicy, sayuran segar, dan kentang goreng.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg">
+          <div class="h-16 w-16 rounded-lg bg-surface-container flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[#C8813A]">local_pizza</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Pizza</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp38k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Thin crust dengan topping keju mozzarella leleh.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SNACK Panel -->
+    <div id="panel-snack" class="menu-panel">
+      <div class="space-y-3 mt-4">
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg">
+          <div class="h-16 w-16 rounded-lg overflow-hidden flex-shrink-0">
+            <img alt="French Fries" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjJH19t48ydmGggyaRxdiWFT6ylZ8EPfRkI6koSRzb4IcAJUObj4hRzW5J0El0Ic7lPUbvphNPni_5s8kyTjQSQCEXcP3S2xvbublpVAFmtJPrjV6A3wICTcybG9R9VVl7L_rehb0NwkPU_3W93wO3re2rKGBf8H89S5Z3tbsi9O00iSWGKiTF4qBtDYFU4_ZV8DT1cDPDoAXaI_Xn1f4nRnrI-Q5wj53-l1na25Km191hyNp3DncuiYmA9I2BzcX6-ePgxVBemb0S"/>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">French Fries</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp18k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Kentang goreng renyah dengan bumbu rahasia.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg">
+          <div class="h-16 w-16 rounded-lg bg-surface-container flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[#C8813A]">ramen_dining</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Dimsum</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp22k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Dimsum kukus hangat dengan saus celup spesial.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1A120A] border border-white/5 shadow-lg relative">
+          <div class="absolute -top-1 -right-1 bg-[#C8813A] text-[#120d0a] text-[9px] font-bold px-2 py-0.5 rounded shadow-sm uppercase tracking-tighter">must try</div>
+          <div class="h-16 w-16 rounded-lg bg-surface-container flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[#C8813A]">breakfast_dining</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-0.5">
+              <h4 class="font-medium text-[#F0E3C8]">Butternuts Toast</h4>
+              <span class="text-[#C8813A] font-semibold text-sm">Rp45k</span>
+            </div>
+            <p class="text-[#9E8D77] text-xs">Roti panggang peanut butter jelly dengan sentuhan mewah.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GoFood Note -->
+    <div class="mt-12 mb-6 flex flex-col items-center justify-center p-8 rounded-3xl bg-surface-container-low border border-outline-variant/10 text-center">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-full bg-[#EE2737] flex items-center justify-center shadow-inner flex-shrink-0">
+          <svg class="w-6 h-6" viewbox="0 0 100 100"><circle cx="50" cy="50" fill="#EE2737" r="45"/><path d="M75,50 A25,25 0 1,1 25,50 A25,25 0 1,1 75,50" fill="white"/><path d="M65,50 L45,35 L45,65 Z" fill="#EE2737"/></svg>
+        </div>
+        <span class="font-bold text-xl tracking-tighter text-[#F0E3C8]">GoFood</span>
+      </div>
+      <p class="text-on-surface-variant text-sm font-medium">Juga tersedia di GoFood</p>
+      <p class="text-[10px] text-outline mt-1 italic">Super Partner · Nikmati Kabita dari rumah.</p>
+    </div>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAGE 5 — MOMEN & EVENTS
+═══════════════════════════════════════════════════════════════════ -->
+<div id="page-momen" class="page pt-24">
+  <main class="pb-8 px-6 max-w-md mx-auto">
+    <header class="mb-10">
+      <p class="font-accent italic text-primary mb-1 text-lg">Agenda Terdekat</p>
+      <h2 class="text-5xl font-headline font-bold leading-tight tracking-tight text-on-surface">Momen di Kabita</h2>
+      <div class="w-12 h-0.5 bg-primary-container mt-4"></div>
+    </header>
+    <div class="space-y-6">
+      <article class="bg-surface-container-lowest rounded-xl p-6 shadow-xl accent-border relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl pointer-events-none"></div>
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-xs font-label uppercase tracking-widest text-primary font-bold">Utama</span>
+          <span class="text-xs text-on-surface-variant font-medium">31 Des 2025</span>
+        </div>
+        <h3 class="text-2xl font-headline font-bold mb-2 text-on-surface">New Year's Eve Party</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed font-editorial italic">Bar Take Over + Musik untuk merayakan pergantian tahun dengan elegan.</p>
+      </article>
+      <article class="bg-surface-container-lowest rounded-xl p-6 shadow-lg accent-border opacity-90">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Reguler</span>
+          <span class="text-xs text-on-surface-variant font-medium">Sesekali</span>
+        </div>
+        <h3 class="text-xl font-headline font-bold mb-2 text-on-surface">Live Music Nights</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Alunan melodi akustik menemani senja di sudut ruang kami.</p>
+      </article>
+      <article class="bg-surface-container-lowest rounded-xl p-6 shadow-lg accent-border">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-xs font-label uppercase tracking-widest text-primary font-bold">Musiman</span>
+          <span class="text-xs text-on-surface-variant font-medium">Maret – April 2025</span>
+        </div>
+        <h3 class="text-xl font-headline font-bold mb-2 text-on-surface">Ramadhan Hours 2025</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Waktu operasional khusus dan menu takjil kurasi spesial kami.</p>
+      </article>
+      <article class="bg-surface-container-lowest rounded-xl p-6 shadow-lg accent-border opacity-80">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Harian</span>
+          <span class="text-xs text-on-surface-variant font-medium">Setiap Hari</span>
+        </div>
+        <h3 class="text-xl font-headline font-bold mb-2 text-on-surface">Daily Vibes Nongkrong</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Ruang hangat untuk berbagi cerita atau sekadar menyepi dengan buku.</p>
+      </article>
+    </div>
+    <!-- CTA -->
+    <section class="mt-14 text-center">
+      <p class="text-on-surface-variant text-sm mb-5 font-medium">Jangan lewatkan momen seru lainnya.</p>
+      <a href="https://instagram.com/kabita.jkt" class="inline-flex items-center gap-3 bg-gradient-to-b from-[#C8813A] to-[#8c5008] text-[#2d1600] px-8 py-4 rounded-full font-bold shadow-lg active:scale-95 transition-all">
+        <span class="material-symbols-outlined text-lg">photo_camera</span>
+        <span class="font-label tracking-wide">Follow @kabita.jkt</span>
+      </a>
+    </section>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAGE 6 — PESAN / DELIVERY
+═══════════════════════════════════════════════════════════════════ -->
+<div id="page-pesan" class="page">
+  <main class="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 amber-glow pointer-events-none z-0"></div>
+    <div class="relative z-10 space-y-10 max-w-md w-full px-8 text-center pt-20 pb-32">
+      <div class="relative w-full aspect-[4/5] rounded-xl overflow-hidden shadow-2xl -rotate-2 scale-105 border border-outline-variant/10">
+        <img class="w-full h-full object-cover"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjL3t4quLhPH32MJN88zhQEcIWVAS51mdPlidXNNzqnWf_Uv6P9MzsEX99ZBzneiVz-nZZaWohm8aSVYmRd7_Ew99806UcokdzWTXrOQMk-l6BtrTdIyLZiMUJeEu4UigOkjvF2GldlheGjEsSU_9HiWYKfpDR7eHAfrrJus5zr_ru2z5pJFg0U8OtpohoQKkoDSbttOgy9DdkuM2vx7iQZccOGkMAZENtcDc4QIzb8KbFoCMvLDlICcucEEEIECQJqvENZMSJk7hG"
+          alt="Latte art Kabita"/>
+      </div>
+      <div class="space-y-3">
+        <h2 class="text-4xl font-headline italic tracking-tight text-on-background leading-tight">
+          Mau pesan dari rumah?
+        </h2>
+        <p class="text-on-surface-variant font-body text-base max-w-xs mx-auto">
+          Kabita tersedia di GoFood sebagai Super Partner.
+        </p>
+      </div>
+      <div class="flex justify-center items-center gap-3 flex-wrap">
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest/50 text-xs font-label tracking-widest uppercase text-on-surface-variant border border-outline-variant/10">Minuman</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest/50 text-xs font-label tracking-widest uppercase text-on-surface-variant border border-outline-variant/10">Kopi</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest/50 text-xs font-label tracking-widest uppercase text-on-surface-variant border border-outline-variant/10">Roti</span>
+      </div>
+      <div class="flex flex-col gap-4 w-full items-center">
+        <button class="w-full h-14 bg-[#00AA13] text-white rounded-full flex items-center justify-between px-8 shadow-lg shadow-[#00AA13]/20 active:scale-95 transition-all group">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined fill-icon">delivery_dining</span>
+            <span class="font-bold tracking-tight text-lg">Pesan di GoFood</span>
+          </div>
+          <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </button>
+        <button onclick="goTo('lokasi')" class="text-primary font-medium tracking-wide flex items-center gap-2 hover:underline transition-all text-sm">
+          Atau langsung mampir ke sini
+          <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
+        </button>
+      </div>
+      <p class="font-accent italic text-on-surface-variant/50 text-sm pt-4">
+        "Aroma kopi yang mendalam, kini lebih dekat dengan Anda."
+      </p>
+    </div>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAGE 7 — LOKASI & JAM BUKA
+═══════════════════════════════════════════════════════════════════ -->
+<div id="page-lokasi" class="page pt-24">
+  <main class="px-6 max-w-lg mx-auto space-y-6">
+    <section class="mt-4">
+      <h2 class="font-headline text-4xl font-medium tracking-tight text-on-surface">Waktu & Titik Temu</h2>
+      <p class="font-editorial italic text-on-surface-variant text-lg mt-1">Menikmati jeda di sudut Cibubur.</p>
+    </section>
+    <!-- Hours Card -->
+    <div class="bg-surface-container rounded-3xl p-6 shadow-xl border border-outline-variant/10">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="material-symbols-outlined text-primary-container">schedule</span>
+        <h3 class="font-headline text-xl text-on-surface">Jam Operasional</h3>
+      </div>
+      <div class="space-y-3">
+        <div class="flex justify-between items-center p-4 bg-surface-container-low rounded-2xl">
+          <span class="text-on-surface-variant font-medium text-sm">Senin – Jumat</span>
+          <span class="text-primary-container font-bold tracking-tight">14:00 – 22:00</span>
+        </div>
+        <div class="flex justify-between items-center p-4 bg-surface-container-low rounded-2xl">
+          <span class="text-on-surface-variant font-medium text-sm">Sabtu – Minggu</span>
+          <span class="text-primary-container font-bold tracking-tight">14:00 – 23:00</span>
+        </div>
+      </div>
+      <div class="mt-5 pt-5 border-t border-outline-variant/10">
+        <div class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-on-surface-variant text-sm mt-0.5">info</span>
+          <div>
+            <p class="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold mb-1">Jam Ramadhan</p>
+            <p class="text-xs text-on-surface-variant/80 leading-relaxed">
+              Senin – Jumat: 15:30 – 23:30<br/>
+              Sabtu – Minggu: 15:30 – 00:00
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Location Card -->
+    <div class="bg-surface-container rounded-3xl overflow-hidden shadow-xl border border-outline-variant/10">
+      <div class="relative h-48 w-full bg-surface-container-highest overflow-hidden">
+        <img alt="Peta lokasi" class="w-full h-full object-cover opacity-40 grayscale contrast-125"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwu5NkSYjSNZEiZWACOIVhwwnDizP5DP9T4eTSyQjgEs3Y97KBgg7lTCS_ikd3zopnF0FWPJzztqku8oBOoDeQhVDI316XFW1veXFeAZXVlo7UrTgMQMjNMqtnpIf4RKQJW_bCzUMa8AuHdDf4uAhgXgC8wyKttncK25Cl9uHKEsY8iILR2HpA5kIWyU4_oMP8Ms1m1oIR21axIUvXoWpVgVx86PGfyl4teJ0ylElI9nIwJ2ogroFlaKFs75Q8cyumzL1cFAzf0E8F"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="relative">
+            <div class="absolute -inset-4 bg-primary-container/20 rounded-full animate-ping"></div>
+            <span class="material-symbols-outlined text-primary-container text-5xl fill-icon">location_on</span>
+          </div>
+        </div>
+      </div>
+      <div class="p-6">
+        <div class="flex items-start gap-4 mb-5">
+          <span class="material-symbols-outlined text-primary-container mt-1">near_me</span>
+          <div>
+            <h3 class="font-headline text-xl text-on-surface mb-1">Lokasi Kami</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">
+              Jl. Bulak Ringin No.207, RT.2/RW.3, Cibubur, Kec. Ciracas, Jakarta Timur 13720
+            </p>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <a href="https://maps.google.com/?q=Jl.+Bulak+Ringin+No.207+Cibubur+Jakarta+Timur"
+            class="flex items-center justify-center gap-2 w-full py-4 bg-gradient-to-b from-[#C8813A] to-[#8c5008] text-[#2d1600] font-bold rounded-full shadow-lg active:scale-95 transition-transform">
+            Buka di Google Maps
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+          <a href="https://linktr.ee/kabitajkt"
+            class="flex items-center justify-center gap-2 w-full py-3 border border-outline-variant/30 text-on-surface-variant text-sm rounded-full hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined text-sm">link</span>
+            linktr.ee/kabitajkt
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     BOTTOM NAVIGATION
+═══════════════════════════════════════════════════════════════════ -->
+<nav class="fixed bottom-0 left-0 w-full z-[90] flex justify-around items-center px-4 pb-8 pt-4 bg-[#1A120A]/92 backdrop-blur-md shadow-[0_-10px_40px_rgba(0,0,0,0.6)] rounded-t-[32px]">
+  <button id="nav-beranda" class="nav-item active" onclick="goTo('beranda')">
+    <span class="material-symbols-outlined">home</span>
+    <span class="text-[11px] uppercase tracking-widest font-medium">Beranda</span>
+  </button>
+  <button id="nav-menu" class="nav-item" onclick="goTo('menu')">
+    <span class="material-symbols-outlined">menu_book</span>
+    <span class="text-[11px] uppercase tracking-widest font-medium">Menu</span>
+  </button>
+  <button id="nav-lokasi" class="nav-item" onclick="goTo('lokasi')">
+    <span class="material-symbols-outlined">near_me</span>
+    <span class="text-[11px] uppercase tracking-widest font-medium">Lokasi</span>
+  </button>
+  <button id="nav-pesan" class="nav-item" onclick="goTo('pesan')">
+    <span class="material-symbols-outlined">shopping_bag</span>
+    <span class="text-[11px] uppercase tracking-widest font-medium">Pesanan</span>
+  </button>
+</nav>
+
+<script>
+// Page routing
+const pages = ['beranda','story','suasana','menu','momen','pesan','lokasi'];
+const navMap = { beranda:'beranda', menu:'menu', lokasi:'lokasi', pesan:'pesan' };
+
+function goTo(pageId) {
+  // Hide all pages
+  pages.forEach(p => {
+    const el = document.getElementById('page-' + p);
+    if (el) el.classList.remove('active');
+  });
+  // Show target page
+  const target = document.getElementById('page-' + pageId);
+  if (target) {
+    target.classList.add('active');
+    target.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navKey = navMap[pageId];
+  if (navKey) {
+    const navBtn = document.getElementById('nav-' + navKey);
+    if (navBtn) navBtn.classList.add('active');
+  }
+}
+
+// Menu tabs
+function switchTab(tab) {
+  ['kopi','nonkopi','makanan','snack'].forEach(t => {
+    document.getElementById('tab-' + t)?.classList.remove('active');
+    document.getElementById('tab-' + t)?.classList.add('inactive');
+    const panel = document.getElementById('panel-' + t);
+    if (panel) panel.classList.remove('active');
+  });
+  document.getElementById('tab-' + tab)?.classList.add('active');
+  document.getElementById('tab-' + tab)?.classList.remove('inactive');
+  const activePanel = document.getElementById('panel-' + tab);
+  if (activePanel) activePanel.classList.add('active');
+}
+
+// Drawer
+function toggleDrawer() {
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('drawer-overlay');
+  const isOpen = !drawer.classList.contains('-translate-x-full');
+  if (isOpen) {
+    drawer.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
+  } else {
+    drawer.classList.remove('-translate-x-full');
+    overlay.classList.remove('hidden');
+  }
+}
+</script>
+</body>
+</html>
