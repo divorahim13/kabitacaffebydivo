@@ -667,6 +667,40 @@ body {
         <p class="text-on-surface-variant text-sm leading-relaxed">Ruang hangat untuk berbagi cerita atau sekadar menyepi dengan buku.</p>
       </article>
     </div>
+    <!-- Gallery -->
+<div class="mt-10 mb-2">
+  <div class="flex items-center justify-between mb-4">
+    <p class="text-xs uppercase tracking-widest text-[#C8813A] font-bold">Galeri Momen</p>
+    <a href="https://instagram.com/kabita.jkt" class="text-xs text-on-surface-variant hover:text-[#F0E3C8] transition-colors">Lihat semua →</a>
+  </div>
+  <!-- Grid 3 kolom -->
+  <div class="grid grid-cols-3 gap-2">
+    <div class="aspect-square rounded-xl overflow-hidden group">
+      <img class="w-full h-full object-cover grayscale-[20%] group-hover:scale-110 transition-transform duration-500"
+        src="moment1.webp"
+        alt="Momen Kabita"/>
+    </div>
+    <div class="aspect-square rounded-xl overflow-hidden group">
+      <img class="w-full h-full object-cover grayscale-[20%] group-hover:scale-110 transition-transform duration-500"
+        src="moment2.webp"
+        alt="Momen Kabita"/>
+    </div>
+    <div class="aspect-square rounded-xl overflow-hidden group">
+      <img class="w-full h-full object-cover grayscale-[20%] group-hover:scale-110 transition-transform duration-500"
+        src="moment3.webp"
+        alt="Momen Kabita"/>
+    </div>
+    <div class="col-span-2 aspect-video rounded-xl overflow-hidden group">
+      <img class="w-full h-full object-cover grayscale-[20%] group-hover:scale-110 transition-transform duration-500"
+        src="moment4.webp"
+        alt="Suasana Kabita"/>
+    </div>
+    <div class="aspect-video rounded-xl overflow-hidden group">
+      <img class="w-full h-full object-cover grayscale-[20%] group-hover:scale-110 transition-transform duration-500"
+        src="moment5.webp"
+        alt="Evening Vibe"/>
+    </div>
+  </div>
     <!-- CTA -->
     <section class="mt-14 text-center">
       <p class="text-on-surface-variant text-sm mb-5 font-medium">Jangan lewatkan momen seru lainnya.</p>
@@ -704,13 +738,14 @@ body {
         <span class="px-4 py-1.5 rounded-full bg-surface-container-highest/50 text-xs font-label tracking-widest uppercase text-on-surface-variant border border-outline-variant/10">Roti</span>
       </div>
       <div class="flex flex-col gap-4 w-full items-center">
-        <button class="w-full h-14 bg-[#00AA13] text-white rounded-full flex items-center justify-between px-8 shadow-lg shadow-[#00AA13]/20 active:scale-95 transition-all group">
-          <div class="flex items-center gap-3">
-            <span class="material-symbols-outlined fill-icon">delivery_dining</span>
-            <span class="font-bold tracking-tight text-lg">Pesan di GoFood</span>
-          </div>
-          <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-        </button>
+        <a href="https://gofood.link/a/Eofpf3G" target="_blank"
+  class="w-full h-14 bg-[#00AA13] text-white rounded-full flex items-center justify-between px-8 shadow-lg shadow-[#00AA13]/20 active:scale-95 transition-all group">
+  <div class="flex items-center gap-3">
+    <span class="material-symbols-outlined fill-icon">delivery_dining</span>
+    <span class="font-bold tracking-tight text-lg">Pesan di GoFood</span>
+  </div>
+  <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
         <button onclick="goTo('lokasi')" class="text-primary font-medium tracking-wide flex items-center gap-2 hover:underline transition-all text-sm">
           Atau langsung mampir ke sini
           <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
@@ -765,20 +800,14 @@ body {
     <div class="bg-surface-container rounded-3xl overflow-hidden shadow-xl border border-outline-variant/10">
       <div class="relative w-full overflow-hidden" style="height:220px;">
   <iframe
-    src="https://www.openstreetmap.org/export/embed.html?bbox=106.8820,−6.3780,106.8920,−6.3700&layer=mapnik&marker=-6.3744,106.8869"
+    src="https://maps.google.com/maps?q=Kabita+Coffee+%26+Space,+Jl.+Bulak+Ringin+No.207,+Cibubur,+Jakarta+Timur&output=embed&z=17"
     width="100%"
     height="220"
-    style="border:0; filter: saturate(0.3) brightness(0.6) sepia(0.4);"
+    style="border:0;"
     allowfullscreen=""
     loading="lazy">
   </iframe>
-  <!-- Pin overlay -->
-  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-    <div class="relative">
-      <div class="absolute -inset-4 bg-primary-container/20 rounded-full animate-ping"></div>
-      <span class="material-symbols-outlined text-primary-container text-5xl fill-icon">location_on</span>
-    </div>
-  </div>
+
   <!-- Bottom fade -->
   <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-surface-container to-transparent pointer-events-none"></div>
 </div>
@@ -793,7 +822,7 @@ body {
           </div>
         </div>
         <div class="space-y-3">
-          <a href="https://maps.google.com/?q=Jl.+Bulak+Ringin+No.207+Cibubur+Jakarta+Timur"
+          <a href="https://maps.app.goo.gl/H9rURZyAGjaXjK4X7"
             class="flex items-center justify-center gap-2 w-full py-4 bg-gradient-to-b from-[#C8813A] to-[#8c5008] text-[#2d1600] font-bold rounded-full shadow-lg active:scale-95 transition-transform">
             Buka di Google Maps
             <span class="material-symbols-outlined text-sm">arrow_forward</span>
